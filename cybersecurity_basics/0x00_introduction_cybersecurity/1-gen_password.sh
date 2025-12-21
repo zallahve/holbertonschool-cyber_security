@@ -1,2 +1,2 @@
-chmod +x 1-gen_password.sh
-./1-gen_password.sh 20
+#!/bin/bash
+LC_ALL=C tr -dc '[:alnum:]' </dev/urandom | head -c "$1"
