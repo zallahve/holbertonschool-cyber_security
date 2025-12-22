@@ -1,2 +1,2 @@
-chmod +x 3-gen_key.sh
-./3-gen_key.sh new_key
+#!/bin/bash
+ssh-keygen -t rsa -b 4096 -f "$1"
