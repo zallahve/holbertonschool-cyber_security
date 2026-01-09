@@ -1,2 +1,10 @@
 #!/bin/bash
-whois $1 | awk 'function val(s){sub(/^[^:]*:[ \t]*/,"",s);return s} function emit(sec,key,v){if(key=="Street"){sub(/[ \t]*$/,"",v);if(v!="")v=v" "} line=sec" "key","; if(v!="") line=line" "v; print line} BEGIN{secs[1]="Registrant";secs[2]="Admin";secs[3]="Tech";fN=12;f[1]="Name";f[2]="Organization";f[3]="Street";f[4]="City";f[5]="State/Province";f[6]="Postal Code";f[7]="Country";f[8]="Phone";f[9]="Phone Ext:";f[10]="Fax";f[11]="Fax Ext:";f[12]="Email"} {for(i=1;i<=3;i++){s=secs[i];if($0~"^"s" Name:")a[s,"Name"]=val($0);else if($0~"^"s" Organization:")a[s,"Organization"]=val($0);else if($0~"^"s" Street:")a[s,"Street"]=val($0);else if($0~"^"s" City:")a[s,"City"]=val($0);else if($0~"^"s" State/Province:")a[s,"State/Province"]=val($0);else if($0~"^"s" Postal Code:")a[s,"Postal Code"]=val($0);else if($0~"^"s" Country:")a[s,"Country"]=val($0);else if($0~"^"s" Phone Ext:")a[s,"Phone Ext:"]=val($0);else if($0~"^"s" Phone:")a[s,"Phone"]=val($0);else if($0~"^"s" Fax Ext:")a[s,"Fax Ext:"]=val($0);else if($0~"^"s" Fax:")a[s,"Fax"]=val($0);else if($0~"^"s" Email:")a[s,"Email"]=val($0)}} END{for(i=1;i<=3;i++){s=secs[i];for(j=1;j<=fN;j++){key=f[j];emit(s,key,a[s,key])}}}' > $1.csv
+whois $1 | awk -F': ' '/^(Registrant|Admin|Tech)/{
+  gsub(/([a-z])([A-Z])/, "\\1 \\2", $1);
+  if ($1 ~ /Street$/)
+    printf "%s, %s \n", $1, $2;
+  else if ($1 ~ / Ext:$/ && NF == 1)
+    print $1",";
+  else
+    print $1", "$2
+}' > $1.csv
