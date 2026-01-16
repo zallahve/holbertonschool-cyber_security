@@ -1,1 +1,1 @@
-tcp.port == 80 and tcp.len == 0 and ((tcp.flags.syn == 1 and tcp.flags.ack == 0) or (tcp.flags.ack == 1 and tcp.flags.syn == 0))
+tcp.dstport == 80 and tcp.len == 0 and (tcp.flags == 0x002 or tcp.flags == 0x010)
