@@ -1,1 +1,1 @@
-udp.dstport and udp.length == 8
+udp.dstport == 7 and udp.length == 8
