@@ -1,1 +1,1 @@
-ip && ip.len == ip.hdr_len
+ip.proto == 1 && ip.len == ip.hdr_len
