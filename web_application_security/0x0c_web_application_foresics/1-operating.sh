@@ -1,2 +1,2 @@
 #!/bin/bash
-grep -m 1 "Linux version" dmseg
+grep -m 1 "Linux version" dmesg
