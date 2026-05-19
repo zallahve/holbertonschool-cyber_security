@@ -53,9 +53,6 @@ def main():
             mem.seek(address)
             mem.write(replace_string)
 
-            print(f"Heap: {hex(heap_start)}-{hex(heap_end)}")
-            print(f"Found at: {hex(address)}")
-            print("String replaced")
     except Exception as error:
         print(f"Error: {error}")
         sys.exit(1)
