@@ -5,11 +5,13 @@ import sys
 
 
 def usage():
+    """Print usage and exit."""
     print("Usage: read_write_heap.py pid search_string replace_string")
     sys.exit(1)
 
 
 def get_heap(pid):
+    """Return heap start and end addresses."""
     try:
         with open(f"/proc/{pid}/maps", "r", encoding="utf-8") as maps:
             for line in maps:
@@ -25,18 +27,19 @@ def get_heap(pid):
 
 
 def main():
+    """Main function."""
     if len(sys.argv) != 4:
         usage()
 
     pid = sys.argv[1]
-    search_string = sys.argv[2].encode("ascii")
-    replace_string = sys.argv[3].encode("ascii")
+    search = sys.argv[2].encode("ascii")
+    replace = sys.argv[3].encode("ascii")
 
-    if len(replace_string) > len(search_string):
-        print("Error: replace_string must be shorter than or equal to search_string")
+    if len(replace) > len(search):
+        print("Error: replace_string too long")
         sys.exit(1)
 
-    replace_string = replace_string.ljust(len(search_string), b"\x00")
+    replace = replace.ljust(len(search), b"\x00")
     heap_start, heap_end = get_heap(pid)
 
     try:
@@ -44,15 +47,13 @@ def main():
             mem.seek(heap_start)
             heap = mem.read(heap_end - heap_start)
 
-            index = heap.find(search_string)
+            index = heap.find(search)
             if index == -1:
                 print("Error: string not found in heap")
                 sys.exit(1)
 
-            address = heap_start + index
-            mem.seek(address)
-            mem.write(replace_string)
-
+            mem.seek(heap_start + index)
+            mem.write(replace)
     except Exception as error:
         print(f"Error: {error}")
         sys.exit(1)
