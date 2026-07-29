@@ -1,0 +1,1 @@
+# Nmap 7.95 scan initiated Thu Jun  4 02:52:25 2026 as: nmap -sV -A --script=banner,ssl-enum-ciphers,default,smb-enum-domains -oN service_enumeration_results.txt scanme.nmap.org

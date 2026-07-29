@@ -1,0 +1,15 @@
+# Nmap 7.95 scan initiated Wed Jun  3 14:32:23 2026 as: nmap --script=http-vuln-cve2017-5638 -oN vuln_scan_results.txt scanme.nmap.org
+Nmap scan report for scanme.nmap.org (45.33.32.156)
+Host is up (0.24s latency).
+Not shown: 992 closed tcp ports (conn-refused)
+PORT      STATE    SERVICE
+22/tcp    open     ssh
+53/tcp    open     domain
+80/tcp    open     http
+2701/tcp  filtered sms-rcinfo
+5060/tcp  filtered sip
+8007/tcp  filtered ajp12
+9929/tcp  open     nping-echo
+31337/tcp open     Elite
+
+# Nmap done at Wed Jun  3 14:33:23 2026 -- 1 IP address (1 host up) scanned in 60.65 seconds
