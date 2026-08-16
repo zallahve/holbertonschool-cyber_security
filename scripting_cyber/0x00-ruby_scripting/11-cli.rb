@@ -3,7 +3,6 @@
 require 'optparse'
 
 TASKS_FILE = 'tasks.txt'
-
 options = {}
 
 parser = OptionParser.new do |opts|
@@ -34,9 +33,10 @@ if options[:add]
   puts "Task '#{options[:add]}' added."
 
 elsif options[:list]
+  puts "Tasks:"
   if File.exist?(TASKS_FILE)
-    File.readlines(TASKS_FILE, chomp: true).each_with_index do |task, index|
-      puts "#{index + 1}. #{task}"
+    File.readlines(TASKS_FILE, chomp: true).each do |task|
+      puts task
     end
   end
 
