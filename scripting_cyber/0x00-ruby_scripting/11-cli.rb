@@ -34,9 +34,10 @@ if options[:add]
 
 elsif options[:list]
   puts "Tasks:"
+
   if File.exist?(TASKS_FILE)
-    File.readlines(TASKS_FILE, chomp: true).each do |task|
-      puts task
+    File.readlines(TASKS_FILE, chomp: true).each_with_index do |task, index|
+      puts "#{index + 1}. #{task}"
     end
   end
 
