@@ -1,3 +1,7 @@
-# Web Application Forensics
+# holbertonschool-cyber_security
 
-This project contains scripts used to analyze logs from web application attacks.
+Cybersecurity coursework and lab exercises.
+
+## privilege_escalation_security_win
+
+Windows privilege escalation tasks and flags (`windows_privsec/`).
