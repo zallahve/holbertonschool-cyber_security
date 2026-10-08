@@ -1,3 +1,3 @@
-# Windows Privilege Escalation
+# Web Application Forensics
 
-Flags for the Windows privilege escalation tasks.
+This project contains scripts used to analyze logs from web application attacks.
